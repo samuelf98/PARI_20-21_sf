@@ -1,35 +1,35 @@
 #!/usr/bin/env python
 # coding=utf-8
 
-
-
-import argparse
-import cv2 as cv
+import cv2
 
 # Global variables
-window_name = 'window - Ex3a'
-image_gray = None
-alpha_slider_max=100
+
+window_name = 'window'
+
 
 def onTrackbar(threshold):
-    alpha = threshold / alpha_slider_max
-    beta = (1.0 - alpha)
-    dst = cv.addWeighted(image_gray, alpha,image_gray,beta,0.0)
-    cv.imshow(window_name, dst)
+    _, I_thre=cv2.threshold(I_gray,threshold,255,cv2.THRESH_BINARY)
+    cv2.imshow(window_name,I_thre)
 
 def main():
-    parser = argparse.ArgumentParser()
-    parser.add_argument('-i', '--image', type=str, required=True,help='Full path to image file.')
-    args = vars(parser.parse_args())
-    image = cv.imread(args['image'], cv.IMREAD_COLOR)  # Load an image
-    global image_gray # use global var
-    image_gray = cv.cvtColor(image, cv.COLOR_BGR2GRAY)  # convert bgr to gray image (single channel)
 
-    cv.namedWindow(window_name)
+    image_rgb = cv2.imread('/home/samuel/PARI_20-21_sf/Aula_05/Imagens/atlas2000_e_atlasmv.png',1)
 
-    trackbar_name = 'Alpha x %d' % alpha_slider_max
-    cv.createTrackbar(trackbar_name, window_name, 0, alpha_slider_max, onTrackbar)
+    global I_gray
+    I_gray=cv2.cvtColor(image_rgb,cv2.COLOR_BGR2GRAY)
+
+
+    cv2.namedWindow(window_name)
+
+    trackbar_name='Threshold'
+
+    #Criar trackbar : nome,nome janela,ponto inicial da trackbar,max,função
+    cv2.createTrackbar(trackbar_name,window_name,0,255,onTrackbar)
+
+    #Aqui serve para a barra começar nos 128
+    onTrackbar(128)
+    cv2.waitKey(0)
 
 if __name__ == '__main__':
     main()
-

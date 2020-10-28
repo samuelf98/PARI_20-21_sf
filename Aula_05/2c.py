@@ -1,31 +1,30 @@
 #!/usr/bin/env python
 # coding=utf-8
 
+
+
 import cv2
-import matplotlib.pyplot as plt
 
 def main():
-    image_filename = '/home/samuel/PARI_20-21_sf/Aula_05/Imagens/atlascar2.png'
-    img = cv2.imread(image_filename, cv2.IMREAD_COLOR) # Load an imaget
+    # Load Image
+    image_rgb = cv2.imread('/home/samuel/PARI_20-21_sf/Aula_05/Imagens/atlascar2.png')
 
-    RED,GREEN,BLUE=cv2.split(img)
-    ret, BLUE = cv2.threshold(BLUE, 50, 50, cv2.THRESH_BINARY)
-    ret, GREEN = cv2.threshold(GREEN, 100, 100, cv2.THRESH_BINARY)
-    ret, RED = cv2.threshold(RED, 150, 150, cv2.THRESH_BINARY)
-    MERGE = cv2.merge((RED,GREEN,BLUE))
-    ZERO = img
+    # Dividir imagem - Vou colocar em cada uma das variaveis um dos canais de cor
+    b, g, r = cv2.split(image_rgb)
+    _, bt = cv2.threshold(b, 50, 255,cv2.THRESH_BINARY)  # 255 é o valor que ele colocar se o valor do pixel for maior que 50
+    _, gt = cv2.threshold(g, 100, 255, cv2.THRESH_BINARY)
+    _, rt = cv2.threshold(r, 150, 255, cv2.THRESH_BINARY)
 
-    titles = ['Original Image', 'BLUE', 'GREEN', 'RED', 'MERGE','ZERO']
-    images = [img, BLUE, GREEN, RED, MERGE, ZERO]
+    # Existem variaveis silenciosas que é uma variavel, mas  que n é utilizada. Neste caso é o retval que pode ser
+    # substituido por _
 
-    for i in xrange(6):
-        plt.subplot(2, 3, i + 1), plt.imshow(images[i], 'gray')
-        plt.title(titles[i])
-        plt.xticks([]), plt.yticks([])                  #Aqui tira os eixos das imagens
-    plt.show()
+    # Merge
+    newimage = cv2.merge((bt, gt, rt))
 
-    cv2.imshow('window', MERGE)  # Display the image
-    cv2.waitKey(0)  # wait for a key press before proceeding - NEste caso ele fecha a janela quando se preissona uma tecla
+    # Display
+    mywindo = "IMAGEM"
+    cv2.imshow(mywindo, newimage)
+    cv2.waitKey(0)
 
 if __name__ == '__main__':
     main()

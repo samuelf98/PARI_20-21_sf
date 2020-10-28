@@ -3,22 +3,24 @@
 
 import cv2
 
+
 def main():
-    x=0     # Variável responsável por mudar as imagens
+    flip_flop = False  # Variável responsável por mudar as imagens
     while True:
-        if x==0:
+        if flip_flop:
             image_filename = '/home/samuel/PARI_20-21_sf/Aula_05/Imagens/atlascar.png'
-            x=1
+            flip_flop=False
         else:
             image_filename = '/home/samuel/PARI_20-21_sf/Aula_05/Imagens/atlascar2.png'
-            x=0
+            flip_flop=True
 
-        image = cv2.imread(image_filename, cv2.IMREAD_COLOR) # Load an imaget
+        image = cv2.imread(image_filename, cv2.IMREAD_COLOR)  # Load an imaget
         cv2.imshow('window', image)  # Display the image
-        cv2.waitKey(3000) # wait for a key press before proceeding - NEste caso ele fecha a janela quando se preissona uma tecla
+        k= cv2.waitKey(3000)  # wait for a key press before proceeding - NEste caso ele fecha a janela quando se preissona uma tecla
 
-
-
+        #Parar programa
+        if k==107:
+            break
 
 if __name__ == '__main__':
     main()
