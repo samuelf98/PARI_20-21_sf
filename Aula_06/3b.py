@@ -3,8 +3,6 @@
 
 import cv2
 
-
-
 def main():
     #------------Detetar Cara-------------------------------------------#
 
@@ -20,8 +18,8 @@ def main():
         _, imagem = cap.read()
 
         imagem2 = imagem.copy()
-
-        # Convert to grayscale
+        imagem3=imagem.copy()
+        # Con#vert to grayscale
         gray = cv2.cvtColor(imagem2, cv2.COLOR_BGR2GRAY)
 
         # Detect the faces
@@ -42,12 +40,16 @@ def main():
                 # Following line overlays transparent rectangle over the image
                 imagem2 = cv2.addWeighted(overlay, alpha, imagem2, 1 - alpha, 0)
 
-
+                #---------Deteção de Arestas--------#
+            imagem3=cv2.Canny(gray,80,150)
+            #REtr.Tree dá-me todos os contornos, e o chain dá-me todos os pontos
+            contours,h=cv2.findContours(imagem3,cv2.RETR_TREE,cv2.CHAIN_APPROX_NONE)
+            cv2.drawContours(imagem2,contours,-1,(0,0,255),1)#pintar a vermelho
 
         # Display
         cv2.imshow("Original", imagem)
         cv2.imshow('Detetar Caras', imagem2)
-
+        #cv2.imshow('Detetar Arestas', co)
         # Stop if escape key is pressed
         k = cv2.waitKey(30) & 0xff
         if k == 27:
