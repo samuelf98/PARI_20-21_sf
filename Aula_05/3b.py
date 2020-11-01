@@ -25,6 +25,9 @@ def main():
 
     cv2.createTrackbar(trackbar_name,window_name,0,255,myonTrackbar)
 
+
+
+
     #onTrackbar(128)
     cv2.waitKey(0)
 
