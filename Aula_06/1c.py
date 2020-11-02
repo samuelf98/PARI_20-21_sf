@@ -3,18 +3,20 @@
 
 import cv2
 from functools import partial
-
 import numpy as np
 
 
 def click_event(event, x, y, flags, params,imagem,window_name):
         if event == cv2.EVENT_LBUTTONDOWN:
-
-            imagem[y,x,2]=0
-            imagem[y, x, 1] = 0
-            imagem[y, x,0] = 255
-            print(x,y)
+            center_coordinates = (x, y)
+            radius = 3
+            color = (255, 0, 0)
+            thickness = -1
+            imagem = cv2.circle(imagem, center_coordinates, radius, color, thickness)
+            # print(x,y)
             cv2.imshow(window_name, imagem)
+
+
 
 def main():
 
