@@ -9,7 +9,6 @@ def main():
     window_name = 'A5-Ex2'
     cv2.namedWindow(window_name,cv2.WINDOW_AUTOSIZE)
     while True:
-
         signal, image = cap.read()  # get an image from the camera
         if not signal:          #se não receber sinal desliga - sinal é true ou false
             break

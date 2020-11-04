@@ -33,9 +33,9 @@ def main():
             if face_area>20000:
                 #Retangulo azul
                 cv2.rectangle(imagem2, (x, y), (x + w, y + h), (255, 0, 0), 2)
-
-                overlay=imagem2.copy()
+                cv2.circle()
                 #Retangulo pintado a verde
+                overlay = imagem2.copy()
                 cv2.rectangle(overlay, (x, y), (x + w, y + h), (0, 180, 0), -1)  # A filled rectangle
                 alpha = 0.3  # Transparency factor.
 

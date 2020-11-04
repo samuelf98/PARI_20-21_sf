@@ -2,11 +2,10 @@
 # coding=utf-8
 
 import cv2
-import numpy as np
+import dlib
 
 def edge_detecion(imagem_cinza,imagem_cores):
     imagem3=cv2.Canny(imagem_cinza,30,60)
-    imagem3=cv2.dilate(imagem3,np.ones((3,3)),iterations=2)
     #REtr.Tree dá-me todos os contornos, e o chain dá-me todos os pontos
     contours,h=cv2.findContours(imagem3,cv2.RETR_TREE,cv2.CHAIN_APPROX_NONE)
     cv2.drawContours(imagem_cores,contours,-1,(0,0,255),1)#pintar a vermelho
@@ -18,6 +17,7 @@ def main():
     #Usar o script para detetar caras
     face_cascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
 
+    predictor=dlib.shape_predictor("shape_predictor_68_face_landmarks.dat")
     # To capture video from webcam.
     cap = cv2.VideoCapture(0)
 
@@ -33,7 +33,7 @@ def main():
 
         # Detect the faces
         faces = face_cascade.detectMultiScale(gray, 1.1, 4)
-
+        detetor=dlib.get_frontal_face_detector()
         # Draw the rectangle de azul around each face; Limitar a area da cara
         for (x, y, w, h) in faces:
             face_area=w*h
@@ -51,6 +51,24 @@ def main():
 
         #---------Deteção de Arestas--------#
         mask=edge_detecion(gray,imagem)
+
+        # if face_area>20000:
+        #     # Todos os pontos que o haarscade mme dá. Mas para a boca preciso apenas dos 48
+        #     x_lista=[]
+        #     y_lista=[]
+        #
+        #     for n in range(0,landmarks):
+        #         x=landmarks.part(n).x
+        #         y=landmarks.part(n).y
+        #         cv2.circle(imagem2,(x,y),10,(255,0,0),-1)
+        #
+        #     cv2.imshow("Pontos", imagem2)
+        #
+        #     for n inrange(48,68):
+        #         x = landmarks.part(n).x
+        #         y = landmarks.part(n).y
+        #         x_lista.append(x)
+        #         y_lista.append(y)
 
         # Display
         cv2.imshow("Original", imagem)
