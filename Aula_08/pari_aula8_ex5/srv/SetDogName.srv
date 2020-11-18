@@ -1,0 +1,4 @@
+string new_name    #o que vamos alterar com o servico
+string color
+---
+bool result         #o que o serviço devolve
