@@ -6,7 +6,8 @@ import rospy
 from colorama import Fore
 from pari_aula9_ex1.msg import Mensagem_Dog
 
-
+# neste caso, o código n vai funcionar, pois ao terminar o roscore, os parametros criados são limpos da sua memória. assim, tenho de criar esses parametros de novo ou uso um ficheio yaml
+#como no exercicio 4
 dog_msg = Mensagem_Dog()
 dog_msg.name = 'Bobbi'
 dog_msg.age = 7

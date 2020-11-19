@@ -1,0 +1,58 @@
+
+<launch>
+    <arg name= "run_publishers" default="true"/>
+    <!-- Load parameters:  <rosparam command= "load" file="$(find pari_aula9_ex5)/msg/params.yaml" /> -->
+    <!-- Neste caso para correr este programa, primeiro vou ter de ir colocar os paramteros do higlight_txt_color no rosparam (da pasta yaml)
+    pois os ficheiros talker e listener necessitam disso para a cor -->
+
+
+
+        <!-- Se quiser suprimir os publicadores : roslaunch pari_aula9_ex5 bringup.launch run_publishers:=false -->
+
+    <!-- PUBLISHERS-->
+    <group if="$(arg run_publishers)">              #Para correr os publicadores ( ou suprimi-los)
+        <!-- Publisher_A-->
+        <node name="Publisher_A" pkg="pari_aula9_ex5" type="talker.py" output="screen">   <!-- Definir o node: Nome, onde está, nome do ficheiro, imprimir para ecra-->
+
+            <param name="frequency" value="1" type="int" />                  <!-- Mudar a frequancia que é um parametro-->
+            <remap from="Conversa" to="dog_1" />                            <!-- Mudar o canal que era Conversa para o pedido-->
+        </node>
+                     <!-- Publisher_B-->
+        <node name="Publisher_B" pkg="pari_aula9_ex5" type="talker.py" output="screen">
+            <param name="frequency" value="3" type="double" />
+            <remap from="Conversa" to="dog_1" />
+        </node>
+
+        <node name="Publisher_C" pkg="pari_aula9_ex5" type="talker.py" output="screen">
+            <param name="frequency" value="1" type="double" />
+            <remap from="Conversa" to="dog_2" />
+        </node>
+
+    </group>
+
+    #Caso bloqueie os publicadores, vou correr uma gravação
+    <group unless="$(arg run_publishers)">
+            <node name="test_bag" pkg="rosbag" type="play" output="screen" args="/home/samuel/catkin_ws/src/PARI_20-21_sf/Aula_09/pari_aula9_ex5/bag/test_bag.bag" />
+    </group>
+
+
+     <!-- SUBSCRIBERS-->
+
+    <node name="SubscriberAB1" pkg="pari_aula9_ex5" type="listener.py" output="screen">
+        <remap from="Conversa" to="dog_1"/>
+    </node>
+
+    <node name="SubscriberAB2" pkg="pari_aula9_ex5" type="listener.py" output="screen">
+        <remap from="Conversa" to="dog_1" />
+    </node>
+
+    <node name="SubscriberC" pkg="pari_aula9_ex5" type="listener.py" output="screen">
+        <remap from="Conversa" to="dog_2" />
+    </node>
+
+
+            <!-- Lauch rqt_graph-->
+    <node name="rqt_graph" pkg="rqt_graph" type="rqt_graph" output="screen"/>
+
+
+</launch>
