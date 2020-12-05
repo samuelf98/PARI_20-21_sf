@@ -1,0 +1,140 @@
+<?xml version="1.0"?>
+<robot name="SCARA">
+
+<material name="blue">
+    <color rgba="0 0 0.8 1"/>
+  </material>
+  <material name="black">
+    <color rgba="0 0 0 1"/>
+  </material>
+  <material name="white">
+    <color rgba="1 1 1 1"/>
+  </material>
+
+<!--  Cilindro inicial -->
+  <link name="base_link">
+    <visual>
+      <geometry>
+        <cylinder length="0.6" radius="0.2"/>
+      </geometry>
+      <material name="blue"/>
+      <origin xyz="0 0 0.3"/>
+    </visual>
+  </link>
+
+    <link name="bar1_cil">
+    <visual>
+      <geometry>
+        <cylinder length="0.6" radius="0.2"/>
+      </geometry>
+      <material name="white"/>
+      <origin xyz="0 0 -0.3"/>      <!-- Deslocao do centro da nossa peca em relacao ao seu referencial local -->
+    </visual>
+  </link>
+
+  <joint name="base_link_to_link1" type="continuous">
+    <parent link="base_link"/>
+    <child link="bar1_cil"/>
+    <origin xyz="0 0 1.2"/>        <!-- Pegamos no referencial do parent e damos-lhe as coordenadas relativas a partir desse referencial-->
+    <axis xyz="0 0 1"/>
+  </joint>
+
+<!--  Braco 1-->
+
+  <link name="bar1_box">
+    <visual>
+      <geometry>
+        <box size="2 0.4 0.4"/>
+      </geometry>
+      <origin rpy="0 0 0" xyz="1 0 0"/>
+      <material name="white"/>
+    </visual>
+      </link>
+
+      <joint name="link2_fixed" type="fixed">
+    <parent link="bar1_cil"/>
+    <child link="bar1_box"/>
+    <origin xyz="0 0 -0.2"/>
+    </joint>
+
+<!--  Braco 2-->
+    <link name="bar2_cil">
+    <visual>
+      <geometry>
+        <cylinder length="0.6" radius="0.2"/>
+      </geometry>
+      <material name="black"/>
+      <origin xyz="0 0 -0.3"/>
+    </visual>
+  </link>
+
+    <joint name="link_to_link2" type="continuous">
+    <parent link="bar1_box"/>
+    <child link="bar2_cil"/>
+    <origin xyz="2 0 0.2"/>
+      <axis xyz="0 0 1"/>
+    </joint>
+
+  <link name="bar2_box">
+    <visual>
+      <geometry>
+        <box size="2 0.4 0.4"/>
+      </geometry>
+      <origin rpy="0 0 0" xyz="1 0 -0.2"/>
+      <material name="black"/>
+    </visual>
+      </link>
+
+      <joint name="link3_fixed" type="fixed">
+    <parent link="bar2_cil"/>
+    <child link="bar2_box"/>
+    <origin xyz="0 0 0"/>
+    </joint>
+
+  <link name="bar3_cil">
+    <visual>
+      <geometry>
+        <cylinder length="0.6" radius="0.2"/>
+      </geometry>
+      <material name="blue"/>
+      <origin xyz="0 0 -0.3"/>
+    </visual>
+  </link>
+
+    <joint name="link4" type="fixed">
+    <parent link="bar2_box"/>
+    <child link="bar3_cil"/>
+    <origin xyz="2 0 0"/>
+    </joint>
+
+<link name="raquete">
+    <visual>
+      <geometry>
+         <mesh filename="package://pari_aula11_ex6b/meshes/boltDemo.stl" scale="0.05 0.05 0.05"/>
+      </geometry>
+      <origin xyz="0 0 0"/>
+      <material name="blue"/>
+    </visual>
+  </link>
+
+<!--<robot name="your_robot_name">-->
+<!--  <link name="base_link">-->
+<!--    <visual>-->
+<!--      <origin rpy="0 0 0" xyz="0.15 0 0.35"/>-->
+<!--      <geometry>-->
+<!--        <mesh filename="package://pr2_description/meshes/head_v0/head_pan.stl"/>-->
+<!--      </geometry>-->
+<!--    </visual>-->
+<!--  </link>-->
+
+      <joint name="link3_continous" type="prismatic">
+    <parent link="bar3_cil"/>
+    <child link="raquete"/>
+    <origin xyz="0 0 0"/>
+    <axis xyz="0 0 1"/>
+    <limit effort="10.0" lower="-1" upper="0.5" velocity="0.5"/>
+    </joint>
+
+
+
+</robot>

@@ -1,0 +1,67 @@
+
+<launch>
+
+     <!-- Terra-->
+    <node name="Terra_1" pkg="pari_aula11_ex3" type="circular_frame.py" >
+        <param name="Nome_Principal" value="sol" type="string" />
+        <param name="Nome_Satelite" value="Terra" type="string" />
+        <param name="velocity" value="1" type="double" />
+        <param name="ra" value="1" type="double" />
+    </node>
+
+         <!-- Mercurio-->
+    <node name="Mercurio" pkg="pari_aula11_ex3" type="circular_frame.py" >
+        <param name="Nome_Principal" value="sol" type="string" />
+        <param name="Nome_Satelite" value="Mercurio" type="string" />
+        <param name="velocity" value="1.59" type="double" />
+        <param name="ra" value="0.387" type="double" />
+    </node>
+
+         <!-- Venus-->
+    <node name="Venus" pkg="pari_aula11_ex3" type="circular_frame.py"  >
+        <param name="Nome_Principal" value="sol" type="string" />
+        <param name="Nome_Satelite" value="Venus" type="string" />
+        <param name="velocity" value="1.18" type="double" />
+        <param name="ra" value="0.723" type="double" />
+    </node>
+
+         <!-- Marte-->
+    <node name="Marte" pkg="pari_aula11_ex3" type="circular_frame.py" output="screen" >
+        <param name="Nome_Principal" value="sol" type="string" />
+        <param name="Nome_Satelite" value="Marte" type="string" />
+        <param name="velocity" value="0.808" type="double" />
+        <param name="ra" value="1.53" type="double" />
+    </node>
+
+         <!-- Jupiter-->
+    <node name="Jupiter" pkg="pari_aula11_ex3" type="circular_frame.py" output="screen" >
+        <param name="Nome_Principal" value="sol" type="string" />
+        <param name="Nome_Satelite" value="Jupiter" type="string" />
+        <param name="velocity" value="0.439" type="double" />
+        <param name="ra" value="5.2" type="double" />
+    </node>
+
+         <!-- Saturno-->
+    <node name="Saturno" pkg="pari_aula11_ex3" type="circular_frame.py" output="screen" >
+        <param name="Nome_Principal" value="sol" type="string" />
+        <param name="Nome_Satelite" value="Saturno" type="string" />
+        <param name="velocity" value="0.325" type="double" />
+        <param name="ra" value="9.58" type="double" />
+    </node>
+
+         <!-- Lua-->
+    <node name="Lua" pkg="pari_aula11_ex3" type="circular_frame.py" output="screen" >
+        <param name="Nome_Principal" value="Terra" type="string" />
+        <param name="Nome_Satelite" value="Lua" type="string" />
+        <param name="velocity" value="4" type="double" />
+        <param name="ra" value="0.2" type="double" />
+    </node>
+
+             <!-- Mercurio To Moon-->
+    <node name="Mercurio_to_Moon" pkg="pari_aula11_ex3" type="mercury_to_moon.py" output="screen" >
+    </node>
+
+    <!-- Lauch rviz-->
+    <node type="rviz" name="rviz" pkg="rviz" args="-d $(find pari_aula11_ex3)/rviz_config.rviz" />
+
+</launch>

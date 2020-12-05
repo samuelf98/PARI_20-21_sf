@@ -1,0 +1,12 @@
+<launch>
+
+      <node pkg="turtlebot3_fake" type="turtlebot3_fake_node" name="turtlebot3_fake_node" output="screen" />
+
+      <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher" output="screen">
+    <param name="publish_frequency" type="double" value="50.0" />
+    </node>
+    
+    <!-- Launch rviz, loading configuration file -->
+    <node name="rviz" pkg="rviz" type="rviz"
+          args="--display-config $(find p_sferreira_bringup)/config/visualize.rviz" required="false"/>
+</launch>
